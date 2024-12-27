@@ -71,85 +71,80 @@ fejlecrow.appendChild(fejleccella3) // Hozzáadjuk a cellát a fejléc sorhoz
 const tbody = document.createElement('tbody') // Létrehozunk egy tbody elemet
 table.appendChild(tbody) // Hozzáadjuk a tbody-t a táblázathoz
 
-// Funkció a táblázat kitöltésére
-function Rendertable() { 
-    tbody.innerHTML = ''; // Töröljük a táblázat korábbi tartalmát
-    for (const currentElement of array) { // Iterálunk a csaták adatai tömbön
-        // Első sor létrehozása
-        const aktivsor = document.createElement('tr'); // Létrehozunk egy tr elemet (sor)
-        tbody.appendChild(aktivsor); // Hozzáadjuk a sort a tbody-hoz
+function Rendertable(){//itt definiálom a renderTable függvényemet
+    for(const currentElement of array){//itt a ciklusunk végigiterál az array tömbünk elemein és a currentElement lesz az aktuális elem
 
-        // Harc cella (csata neve)
-        const harcCella = document.createElement('td'); // Létrehozunk egy td elemet (cellát)
-        harcCella.innerHTML = currentElement.harcMegnevezese; // A cella tartalma a csata neve
-        aktivsor.appendChild(harcCella); // Hozzáadjuk a cellát a sorhoz
-
-        // Ha nincs második szembenálló fél vagy haderő, állítsd be a rowSpan-t
-        if (currentElement.szembenalloFelek2 === undefined && currentElement.hadero2 === undefined) {
-            harcCella.rowSpan = 2; // A rowSpan értékét 2-re állítjuk, hogy a cella több sorra terjedjen ki
-        }
-        aktivsor.appendChild(harcCella); // Hozzáadjuk a cellát a sorhoz
-
-        // Első szembenálló felek cella
-        const felekCella1 = document.createElement('td'); // Létrehozunk egy td elemet (cellát)
-        felekCella1.innerHTML = currentElement.szembenalloFelek1; // Az első szembenálló fél neve
-        aktivsor.appendChild(felekCella1); // Hozzáadjuk a cellát a sorhoz
-
-        // Első haderő cella
-        const haderoCella1 = document.createElement('td'); // Létrehozunk egy td elemet (cellát)
-        haderoCella1.innerHTML = currentElement.hadero1; // Az első fél haderője
-        aktivsor.appendChild(haderoCella1); // Hozzáadjuk a cellát a sorhoz
-
-        // Második sor létrehozása (ha van második szembenálló fél vagy haderő)
-        if (currentElement.szembenalloFelek2 !== undefined || currentElement.hadero2 !== undefined) {
-            const aktivsor2 = document.createElement('tr'); // Létrehozunk egy újabb sort
-            tbody.appendChild(aktivsor2); // Hozzáadjuk a második sort a tbody-hoz
-
-            // Második szembenálló felek cella (ha van)
-            if (currentElement.szembenalloFelek2 !== undefined) {
-                const felekCella2 = document.createElement('td'); // Létrehozunk egy újabb cellát
-                felekCella2.innerHTML = currentElement.szembenalloFelek2; // A második szembenálló fél neve
-                aktivsor2.appendChild(felekCella2); // Hozzáadjuk a cellát a második sorhoz
-            }
-
-            // Második haderő cella (ha van)
-            if (currentElement.hadero2 !== undefined) {
-                const haderoCella2 = document.createElement('td'); // Létrehozunk egy újabb cellát
-                haderoCella2.innerHTML = currentElement.hadero2; // A második fél haderője
-                aktivsor2.appendChild(haderoCella2); // Hozzáadjuk a cellát a második sorhoz
-            }
+        //sor létrehozása
+        const aktivsor = document.createElement('tr');//létrehozok egy tr elemet ami az első sor lesz a tablazatban
+        tbody.appendChild(aktivsor);//hozzaadom a tbody-hoz  
+        
+        const harcMegnevezes = document.createElement('td');//letrehozok egy td elemet
+        harcMegnevezes.innerHTML = currentElement.harcMegnevezese;//az aktuális elem (currentElement) harcMegnevezese tulajdonságának értéke lesz itt megjelenítve 
+        aktivsor.appendChild(harcMegnevezes);//hozzáadja az első sorhoz
+        
+        const szembenalloFelek1 = document.createElement('td');//letrehozok egy td elemet
+        szembenalloFelek1.innerHTML = currentElement.szembenalloFelek1;//az aktuális elem (currentElement) szembenalloFelek1 tulajdonságának értéke lesz itt megjelenítve 
+        aktivsor.appendChild(szembenalloFelek1);//hozzáadjuk a cellát a sorhoz 
+        
+        const hadero1 = document.createElement('td');//letrehozok egy td elemet
+        hadero1.innerHTML = currentElement.hadero1;//az aktuális elem (currentElement) hadero1 tulajdonságának értéke lesz itt megjelenítve 
+        aktivsor.appendChild(hadero1);//hozzáadjuk a cellát a sorhoz 
+        
+        if(currentElement.szembenalloFelek2 !== undefined && currentElement.hadero2 !== undefined){//itt ellenőrizzük azt hogy az aktuális szembealloFelek2 és a hadero2 nem egyenlő-e undefineddel, és ha egyik sem az, csak akkor fut le tovább a kód
+        
+        //második sor létrehozása
+        const aktivsor2 = document.createElement('tr');//létrehozok egy tr elemet ami az első sor lesz a tablazatban
+        tbody.appendChild(aktivsor2);//hozzaadom a tbody-hoz  
+        
+        harcMegnevezes.rowSpan = "2"//Ha idáig lefutott a kódunk akkor biztosan szükség lesz soregyesítés és azt pedig itt adjuk meg
+        
+        const szembenalloFelek2 = document.createElement('td');//letrehozok egy td elemet
+        szembenalloFelek2.innerHTML = currentElement.szembenalloFelek2;//az aktuális elem (currentElement) szembenalloFelek2 tulajdonságának értéke lesz itt megjelenítve 
+        aktivsor2.appendChild(szembenalloFelek2);//hozzáadja a második sorhoz
+        
+        const hadero2 = document.createElement('td');//letrehozok egy td elemet
+        hadero2.innerHTML = currentElement.hadero2;//az aktuális elem (currentElement) hadero2 tulajdonságának értéke lesz itt megjelenítve 
+        aktivsor2.appendChild(hadero2);//hozzáadja a második sorhoz
         }
     }
-    document.getElementById('form').addEventListener('submit', function (e){
-
-        const harcMegnevezeseHTMLelement = document.getElementById('harcMegnevezese')
-        const harcMegnevezeseValue = harcMegnevezeseHTMLelement.value
-
-        const szembenalloFelek1HTMLelement = document.getElementById('szembenalloFelek1')
-        const szembenalloFelek1Value = szembenalloFelek1HTMLelement.value
-
-        const hadero1HTMLelement = document.getElementById('hadero1')
-        const hadero1Value = hadero1HTMLelement.value
-
-        const szembenalloFelek2HTMLelement = document.getElementById('szembenalloFelek2')
-        const szembenalloFelek2Value = szembenalloFelek2HTMLelement.value
-
-
-        const hadero2HTMLelement = document.getElementById('hadero2')
-        const hadero2Value = hadero2HTMLelement.value
-
-        const newHarcok = {
-            harcMegnevezese: harcMegnevezeseValue,
-            szembenalloFelek1: szembenalloFelek1Value,
-            hadero1: hadero1Value,
-            szembenalloFelek2: szembenalloFelek2Value,
-            hadero2: hadero2Value 
-        }
-
-        array.push(newHarcok)
-        Rendertable()
-
-    })
 }
+   // Eseménykezelő hozzáadása a form submit eseményhez
+document.getElementById('form').addEventListener('submit', function (e){
+
+    // A harc megnevezésének lekérése az űrlapról
+    const harcMegnevezeseHTMLelement = document.getElementById('harcMegnevezese')
+    const harcMegnevezeseValue = harcMegnevezeseHTMLelement.value // A harc neve
+
+    // Az első szembenálló fél lekérése az űrlapról
+    const szembenalloFelek1HTMLelement = document.getElementById('szembenalloFelek1')
+    const szembenalloFelek1Value = szembenalloFelek1HTMLelement.value // Az első szembenálló fél neve
+
+    // Az első fél haderőjének lekérése az űrlapról
+    const hadero1HTMLelement = document.getElementById('hadero1')
+    const hadero1Value = hadero1HTMLelement.value // Az első fél haderője
+
+    // A második szembenálló fél lekérése az űrlapról
+    const szembenalloFelek2HTMLelement = document.getElementById('szembenalloFelek2')
+    const szembenalloFelek2Value = szembenalloFelek2HTMLelement.value // A második szembenálló fél neve
+
+    // A második fél haderőjének lekérése az űrlapról
+    const hadero2HTMLelement = document.getElementById('hadero2')
+    const hadero2Value = hadero2HTMLelement.value // A második fél haderője
+
+    // Új harc adatainak létrehozása egy objektumban
+    const newHarcok = {
+        harcMegnevezese: harcMegnevezeseValue, // A harc neve
+        szembenalloFelek1: szembenalloFelek1Value, // Az első szembenálló fél
+        szembenalloFelek2: szembenalloFelek2Value === '' ? undefined : szembenalloFelek2Value, // A második szembenálló fél
+        hadero1: hadero1Value, // Az első fél haderője
+        hadero2: hadero2Value === '' ? undefined : hadero2Value // A második fél haderője
+    }
+
+    // Az új harc hozzáadása a csaták tömbhöz
+    array.push(newHarcok)
+
+    // A táblázat újrarenderelése az új adatokat tartalmazó tömb alapján
+    Rendertable()
+})
 
 Rendertable(); // A táblázat megjelenítése
