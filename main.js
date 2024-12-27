@@ -110,28 +110,71 @@ function Rendertable(){//itt definiálom a renderTable függvényemet
 }
    // Eseménykezelő hozzáadása a form submit eseményhez
 document.getElementById('form').addEventListener('submit', function (e){
-
+    e.preventDefault()
     // A harc megnevezésének lekérése az űrlapról
     const harcMegnevezeseHTMLelement = document.getElementById('harcMegnevezese')
-    const harcMegnevezeseValue = harcMegnevezeseHTMLelement.value // A harc neve
-
+   
     // Az első szembenálló fél lekérése az űrlapról
     const szembenalloFelek1HTMLelement = document.getElementById('szembenalloFelek1')
-    const szembenalloFelek1Value = szembenalloFelek1HTMLelement.value // Az első szembenálló fél neve
 
     // Az első fél haderőjének lekérése az űrlapról
     const hadero1HTMLelement = document.getElementById('hadero1')
-    const hadero1Value = hadero1HTMLelement.value // Az első fél haderője
 
     // A második szembenálló fél lekérése az űrlapról
     const szembenalloFelek2HTMLelement = document.getElementById('szembenalloFelek2')
-    const szembenalloFelek2Value = szembenalloFelek2HTMLelement.value // A második szembenálló fél neve
 
     // A második fél haderőjének lekérése az űrlapról
     const hadero2HTMLelement = document.getElementById('hadero2')
+
+
+    const ThisForm = e.currentTarget
+    const errorElement = ThisForm.querySelectorAll('.error')
+    for(const errors of errorElement){
+        errors.innerHTML = ''
+    }
+    let validate = true
+
+
+
+    const harcMegnevezeseValue = harcMegnevezeseHTMLelement.value // A harc neve
+    const szembenalloFelek1Value = szembenalloFelek1HTMLelement.value // Az első szembenálló fél neve
+    const hadero1Value = hadero1HTMLelement.value // Az első fél haderője
+    const szembenalloFelek2Value = szembenalloFelek2HTMLelement.value // A második szembenálló fél neve
     const hadero2Value = hadero2HTMLelement.value // A második fél haderője
 
+
+    if(harcMegnevezeseValue === ""){
+        const parent= harcMegnevezeseHTMLelement.parentElement
+        const place_of_error = parent.querySelector('.error')
+        if(place_of_error !== undefined){
+            place_of_error.innerHTML = "Add meg a harc nevét"
+        }
+        validate = false
+    }
+
+    if(szembenalloFelek1Value === ""){
+        const parent= szembenalloFelek1HTMLelement.parentElement
+        const place_of_error = parent.querySelector('.error')
+        if(place_of_error !== undefined){
+            place_of_error.innerHTML = "Add meg a felet"
+        }
+        validate = false
+    }
+
+    if(hadero1Value === ""){
+        const parent= hadero1HTMLelement.parentElement
+        const place_of_error = parent.querySelector('.error')
+        if(place_of_error !== undefined){
+            place_of_error.innerHTML = "Add meg a haderőt"
+        }
+        validate = false
+    }
+
+
+
+
     // Új harc adatainak létrehozása egy objektumban
+    if(validate){
     const newHarcok = {
         harcMegnevezese: harcMegnevezeseValue, // A harc neve
         szembenalloFelek1: szembenalloFelek1Value, // Az első szembenálló fél
@@ -145,6 +188,8 @@ document.getElementById('form').addEventListener('submit', function (e){
 
     // A táblázat újrarenderelése az új adatokat tartalmazó tömb alapján
     Rendertable()
+    ThisForm.reset()
+    }    
 })
 
-Rendertable(); // A táblázat megjelenítése
+Rendertable()
