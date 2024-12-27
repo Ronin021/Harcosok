@@ -56,9 +56,9 @@ table.appendChild(thead) // Hozzáadjuk a thead-t a táblázathoz
 const fejlecrow = document.createElement('tr') // Létrehozunk egy tr elemet (sor a fejléchez)
 thead.appendChild(fejlecrow) // Hozzáadjuk a fejléc sort a thead-hoz
 
-const fejleccella2 = document.createElement('th') // Létrehozunk egy th elemet (fejléc cella)
-fejleccella2.innerHTML = fejlec.szembenalloFelek // A cella tartalma a fejlec objektumból
-fejlecrow.appendChild(fejleccella2) // Hozzáadjuk a cellát a fejléc sorhoz
+const fejleccella1 = document.createElement('th') // Létrehozunk egy th elemet (fejléc cella)
+fejleccella1.innerHTML = fejlec.szembenalloFelek // A cella tartalma a fejlec objektumból
+fejlecrow.appendChild(fejleccella1) // Hozzáadjuk a cellát a fejléc sorhoz
 
 const fejleccella2 = document.createElement('th') // Létrehozunk egy újabb th elemet
 fejleccella2.innerHTML = fejlec.szembenalloFelek // Ismét hozzáadjuk a szembenálló felek mezőt
@@ -71,7 +71,8 @@ fejlecrow.appendChild(fejleccella3) // Hozzáadjuk a cellát a fejléc sorhoz
 const tbody = document.createElement('tbody') // Létrehozunk egy tbody elemet
 table.appendChild(tbody) // Hozzáadjuk a tbody-t a táblázathoz
 
-function Rendertable() { // Funkció a táblázat kitöltésére
+// Funkció a táblázat kitöltésére
+function Rendertable() { 
     tbody.innerHTML = ''; // Töröljük a táblázat korábbi tartalmát
     for (const currentElement of array) { // Iterálunk a csaták adatai tömbön
         // Első sor létrehozása
@@ -119,6 +120,36 @@ function Rendertable() { // Funkció a táblázat kitöltésére
             }
         }
     }
+    document.getElementById('form').addEventListener('submit', function (e){
+
+        const harcMegnevezeseHTMLelement = document.getElementById('harcMegnevezese')
+        const harcMegnevezeseValue = harcMegnevezeseHTMLelement.value
+
+        const szembenalloFelek1HTMLelement = document.getElementById('szembenalloFelek1')
+        const szembenalloFelek1Value = szembenalloFelek1HTMLelement.value
+
+        const hadero1HTMLelement = document.getElementById('hadero1')
+        const hadero1Value = hadero1HTMLelement.value
+
+        const szembenalloFelek2HTMLelement = document.getElementById('szembenalloFelek2')
+        const szembenalloFelek2Value = szembenalloFelek2HTMLelement.value
+
+
+        const hadero2HTMLelement = document.getElementById('hadero2')
+        const hadero2Value = hadero2HTMLelement.value
+
+        const newHarcok = {
+            harcMegnevezese: harcMegnevezeseValue,
+            szembenalloFelek1: szembenalloFelek1Value,
+            hadero1: hadero1Value,
+            szembenalloFelek2: szembenalloFelek2Value,
+            hadero2: hadero2Value 
+        }
+
+        array.push(newHarcok)
+        Rendertable()
+
+    })
 }
 
 Rendertable(); // A táblázat megjelenítése
