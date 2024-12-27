@@ -1,0 +1,22 @@
+table, th, td {
+    border-collapse: collapse ;
+    border: 1px solid black ;
+}
+
+thead th:nth-child(1) {
+    background-color: lavender;
+}
+thead th:nth-child(2) {
+    background-color: navy;
+}
+thead th:nth-child(3) {
+    background-color: sandybrown;
+}
+
+.column {
+    background-color: blue;
+}
+
+.error {
+    color: red;
+}
