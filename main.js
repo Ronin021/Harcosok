@@ -53,25 +53,31 @@ colgroup.appendChild(col3) // Hozzáadjuk a harmadik oszlopot a colgroup-hoz
 const thead = document.createElement('thead') // Létrehozunk egy thead elemet (fejléc)
 table.appendChild(thead) // Hozzáadjuk a thead-t a táblázathoz
 
-const fejlecrow = document.createElement('tr') // Létrehozunk egy tr elemet (sor a fejléchez)
-thead.appendChild(fejlecrow) // Hozzáadjuk a fejléc sort a thead-hoz
 
-const fejleccella1 = document.createElement('th') // Létrehozunk egy th elemet (fejléc cella)
-fejleccella1.innerHTML = fejlec.szembenalloFelek // A cella tartalma a fejlec objektumból
-fejlecrow.appendChild(fejleccella1) // Hozzáadjuk a cellát a fejléc sorhoz
+function createFejlec(){
 
-const fejleccella2 = document.createElement('th') // Létrehozunk egy újabb th elemet
-fejleccella2.innerHTML = fejlec.szembenalloFelek // Ismét hozzáadjuk a szembenálló felek mezőt
-fejlecrow.appendChild(fejleccella2) // Hozzáadjuk a cellát a fejléc sorhoz
+    const fejlec = ["Harc megnevezése", "Szembenálló felek", "Haderő"]
 
-const fejleccella3 = document.createElement('th') // Létrehozunk egy újabb th elemet
-fejleccella3.innerHTML = fejlec.hadero // A cella tartalma a haderő mező
-fejlecrow.appendChild(fejleccella3) // Hozzáadjuk a cellát a fejléc sorhoz
+    const fejlecsor = document.createElement('tr')
+
+    thead.appendChild(fejlecsor)
+
+
+    for(let i = 0; i< fejlec.length; i++){
+        const fejleccella = document.createElement('th')
+
+        fejleccella.innerHTML = fejlec[i]
+
+        fejlecsor.appendChild(fejleccella)
+    }
+}
+createFejlec()
+
 
 const tbody = document.createElement('tbody') // Létrehozunk egy tbody elemet
 table.appendChild(tbody) // Hozzáadjuk a tbody-t a táblázathoz
 
-function Rendertable(){//itt definiálom a renderTable függvényemet
+function Rendertable(array){//itt definiálom a renderTable függvényemet
     for(const currentElement of array){//itt a ciklusunk végigiterál az array tömbünk elemein és a currentElement lesz az aktuális elem
 
         //sor létrehozása
@@ -191,7 +197,7 @@ document.getElementById('form').addEventListener('submit', function (e){
         array.push(newHarcok);  // Az új harcot hozzáadjuk a csaták tömbhöz
 
         // A táblázat újrarenderelése
-        Rendertable();  // A táblázat frissítése az új adatokkal
+        Rendertable(array);  // A táblázat frissítése az új adatokkal
 
         // Az űrlap újraindítása (megtisztítja a mezőket)
         ThisForm.reset();  // Az űrlap mezői üresek lesznek
@@ -255,4 +261,4 @@ return validate
 }
 
 // A táblázat megjelenítése a csaták tömb alapján
-Rendertable();  // Az összes adatot tartalmazó táblázat újrarenderelése
+Rendertable(array);  // Az összes adatot tartalmazó táblázat újrarenderelése
