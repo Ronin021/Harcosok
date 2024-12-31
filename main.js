@@ -161,33 +161,19 @@ document.getElementById('form').addEventListener('submit', function (e){
 
     }
 
-    // Ellenőrzés, ha a másik fél mezője üres, de a másik haderő értékkel rendelkezik
-    if (szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== '') {
+    // Ha az második  szembenálló fél mező üres összetettvalidációval
+   if(!osszetettvalidate (szembenalloFelek2HTMLelement, "Add meg a második felet")){
+    validate = false;  // Ha hiba történt, a validálás nem sikerült
 
-        const parent = szembenalloFelek2HTMLelement.parentElement; // parentElement lekérdezése
-
-        const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
-
-        if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
-            place_of_error.innerHTML = "Add meg a másik felet is"; // Hibaüzenet beállítása
-        }
-
-        validate = false; // Validáció sikertelen
     }
 
-    // Ellenőrzés, ha a másik fél értékkel rendelkezik, de a másik haderő üres
-    if (szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === '') {
+    // Ha az második fél haderője mező üres összetettvalidációval
+   if(!osszetettvalidate (hadero2HTMLelement, "Add meg a második haderőt")){
+    validate = false;  // Ha hiba történt, a validálás nem sikerült
 
-        const parent = hadero2HTMLelement.parentElement; // parentElement lekérdezése
-
-        const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
-
-        if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
-            place_of_error.innerHTML = "Add meg a másik haderőt is"; // Hibaüzenet beállítása
-        }
-
-        validate = false; // Validáció sikertelen
     }
+
+  
 
 
 
@@ -229,6 +215,43 @@ function egyszeruvalid(HTMLElement, errormessage) {
         validate = false; // Validáció sikertelen
     }
     return validate; // Eredmény visszaadása
+}
+
+
+
+function osszetettvalidate(szembealloFelek2Field, hadero2Field, errormessage1, errormessage2){
+
+let validate =true
+
+  // Ellenőrzés, ha a másik fél mezője üres, de a másik haderő értékkel rendelkezik
+  if (szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== '') {
+
+    const parent = szembenalloFelek2HTMLelement.parentElement; // parentElement lekérdezése
+
+    const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
+
+    if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
+        place_of_error.innerHTML = "Add meg a másik felet is"; // Hibaüzenet beállítása
+    }
+
+    validate = false; // Validáció sikertelen
+}
+
+// Ellenőrzés, ha a másik fél értékkel rendelkezik, de a másik haderő üres
+if (szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === '') {
+
+    const parent = hadero2HTMLelement.parentElement; // parentElement lekérdezése
+
+    const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
+
+    if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
+        place_of_error.innerHTML = "Add meg a másik haderőt is"; // Hibaüzenet beállítása
+    }
+
+    validate = false; // Validáció sikertelen
+}
+
+return validate
 }
 
 // A táblázat megjelenítése a csaták tömb alapján
