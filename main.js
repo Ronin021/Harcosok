@@ -161,7 +161,33 @@ document.getElementById('form').addEventListener('submit', function (e){
 
     }
 
-    
+    // Ellenőrzés, ha a másik fél mezője üres, de a másik haderő értékkel rendelkezik
+    if (szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== '') {
+
+        const parent = szembenalloFelek2HTMLelement.parentElement; // parentElement lekérdezése
+
+        const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
+
+        if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
+            place_of_error.innerHTML = "Add meg a másik felet is"; // Hibaüzenet beállítása
+        }
+
+        validate = false; // Validáció sikertelen
+    }
+
+    // Ellenőrzés, ha a másik fél értékkel rendelkezik, de a másik haderő üres
+    if (szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === '') {
+
+        const parent = hadero2HTMLelement.parentElement; // parentElement lekérdezése
+
+        const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
+
+        if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
+            place_of_error.innerHTML = "Add meg a másik haderőt is"; // Hibaüzenet beállítása
+        }
+
+        validate = false; // Validáció sikertelen
+    }
 
 
 
