@@ -53,7 +53,9 @@ colgroup.appendChild(col3) // Hozzáadjuk a harmadik oszlopot a colgroup-hoz
 const thead = document.createElement('thead') // Létrehozunk egy thead elemet (fejléc)
 table.appendChild(thead) // Hozzáadjuk a thead-t a táblázathoz
 
-
+/**
+ * 
+ */
 function createFejlec(){
 
     const fejlec = ["Harc megnevezése", "Szembenálló felek", "Haderő"]
@@ -138,7 +140,10 @@ function createForm(fields) {
 // Meghívja a createForm függvényt a fields tömbbel
 createForm(fields);
 
-
+/**
+ * 
+ * @param {Array} array - A táblázathoz szükséges adatok tömbje.
+ */
 function Rendertable(array){//itt definiálom a renderTable függvényemet
     for(const currentElement of array){//itt a ciklusunk végigiterál az array tömbünk elemein és a currentElement lesz az aktuális elem
 
@@ -285,7 +290,15 @@ function egyszeruvalid(HTMLElement, errormessage) {
     return validate; // Eredmény visszaadása
 }
 
-
+/**
+ * Validációs függvény, amely ellenőrzi, hogy az egyik mező megfelelően van-e kitöltve a másikhoz képest.
+ * 
+ * @param {HTMLInputElement} szembealloFelek2Field - A második fél mezője (pl. "2. Harcoló fél").
+ * @param {HTMLInputElement} hadero2Field - A második haderő mezője (pl. "2. Haderő").
+ * @param {string} errormessage1 - Hibaüzenet, ha a második fél mezője üres.
+ * @param {string} errormessage2 - Hibaüzenet, ha a második haderő mezője üres.
+ * @returns {boolean} - `true`, ha a validáció sikeres, különben `false`.
+ */
 
 function osszetettvalidate(szembealloFelek2Field, hadero2Field, errormessage1, errormessage2) {
     let validate = true;
