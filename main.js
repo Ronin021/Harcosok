@@ -144,34 +144,21 @@ document.getElementById('form').addEventListener('submit', function (e){
     const hadero2Value = hadero2HTMLelement.value;  // Második fél haderője
 
     // Hibák kezelésére vonatkozó ellenőrzések
-    // Ha a harc neve mező üres
-    if (harcMegnevezeseValue === "") {
-        const parent = harcMegnevezeseHTMLelement.parentElement;  // A szülő elem lekérése
-        const place_of_error = parent.querySelector('.error');  // Hibaüzenet helyének lekérése
-        if (place_of_error !== undefined) {
-            place_of_error.innerHTML = "Add meg a harc nevét";  // Hibaszöveg megjelenítése
-        }
+    // Ha a harc neve mező üres egyszerűvalidációval
+   if(!egyszeruvalid (harcMegnevezeseHTMLelement, "Add meg a harcot")){
         validate = false;  // Ha hiba történt, a validálás nem sikerült
     }
 
-    // Ha az első szembenálló fél neve mező üres
-    if (szembenalloFelek1Value === "") {
-        const parent = szembenalloFelek1HTMLelement.parentElement;  // A szülő elem lekérése
-        const place_of_error = parent.querySelector('.error');  // Hibaüzenet helyének lekérése
-        if (place_of_error !== undefined) {
-            place_of_error.innerHTML = "Add meg a felet";  // Hibaszöveg megjelenítése
-        }
-        validate = false;  // Ha hiba történt, a validálás nem sikerült
-    }
+    // Ha az első szembenálló fél neve mező üres egyszerűvalidációval
+   if(!egyszeruvalid (szembenalloFelek1HTMLelement, "Add meg a felet")){
+    validate = false;  // Ha hiba történt, a validálás nem sikerült
+}
+    
 
-    // Ha az első fél haderője mező üres
-    if (hadero1Value === "") {
-        const parent = hadero1HTMLelement.parentElement;  // A szülő elem lekérése
-        const place_of_error = parent.querySelector('.error');  // Hibaüzenet helyének lekérése
-        if (place_of_error !== undefined) {
-            place_of_error.innerHTML = "Add meg a haderőt";  // Hibaszöveg megjelenítése
-        }
-        validate = false;  // Ha hiba történt, a validálás nem sikerült
+    // Ha az első fél haderője mező üres egyszerűvalidációval
+   if(!egyszeruvalid (hadero1HTMLelement, "Add meg a haderőt")){
+    validate = false;  // Ha hiba történt, a validálás nem sikerült
+
     }
 
     // Ha minden rendben van, létrehozzuk az új harc adatokat
@@ -195,5 +182,18 @@ document.getElementById('form').addEventListener('submit', function (e){
     }
 });
 
+function egyszeruvalid(HTMLElement, errormessage){
+    let validate = true
+    if(HTMLElement.value === ""){
+        const parent = HTMLElement.parentElement;
+        const place_of_error = parent.querySelector('.error')
+        if(place_of_error !== undefined){
+            place_of_error.innerHTML = errormessage
+        }
+        validate = false
+    }
+    return validate
+
+}
 // A táblázat megjelenítése a csaták tömb alapján
 Rendertable();  // Az összes adatot tartalmazó táblázat újrarenderelése
