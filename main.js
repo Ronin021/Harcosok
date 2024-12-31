@@ -161,6 +161,32 @@ document.getElementById('form').addEventListener('submit', function (e){
 
     }
 
+
+    if(szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== ''){
+
+        const parent = szembenalloFelek2HTMLelement.parentElement
+
+        const place_of_error = parent.querySelector('.error')
+
+        if(place_of_error !== undefined){
+        place_of_error.innerHTML = "Add meg a másik felet is"
+        }
+        validate = false
+    }
+
+    if(szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === ''){
+
+        const parent = hadero2HTMLelement.parentElement
+
+        const place_of_error = parent.querySelector('.error')
+
+        if(place_of_error !== undefined){
+        place_of_error.innerHTML = "Add meg a másik haderőt is"
+        }
+        validate = false
+    }
+
+
     // Ha minden rendben van, létrehozzuk az új harc adatokat
     if (validate) {
         const newHarcok = {
@@ -182,18 +208,24 @@ document.getElementById('form').addEventListener('submit', function (e){
     }
 });
 
-function egyszeruvalid(HTMLElement, errormessage){
-    let validate = true
-    if(HTMLElement.value === ""){
-        const parent = HTMLElement.parentElement;
-        const place_of_error = parent.querySelector('.error')
-        if(place_of_error !== undefined){
-            place_of_error.innerHTML = errormessage
+/**
+ * egyszeruvalid - Egy egyszerű validációs függvény HTML elemek ellenőrzésére.
+ * @param {HTMLElement} HTMLElement - Az ellenőrizendő HTML elem.
+ * @param {string} errormessage - A hibaüzenet, amely megjelenik, ha az érték üres.
+ * @returns {boolean} - true, ha az ellenőrzés sikeres (nem üres), false, ha hibás.
+ */
+function egyszeruvalid(HTMLElement, errormessage) {
+    let validate = true; // A validáció alapértelmezett állapota
+    if (HTMLElement.value === "") { // Ha az érték üres
+        const parent = HTMLElement.parentElement; // parentElement lekérdezése
+        const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
+        if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
+            place_of_error.innerHTML = errormessage; // Hibaüzenet beállítása
         }
-        validate = false
+        validate = false; // Validáció sikertelen
     }
-    return validate
-
+    return validate; // Eredmény visszaadása
 }
+
 // A táblázat megjelenítése a csaták tömb alapján
 Rendertable();  // Az összes adatot tartalmazó táblázat újrarenderelése
