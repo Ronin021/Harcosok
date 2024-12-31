@@ -161,30 +161,8 @@ document.getElementById('form').addEventListener('submit', function (e){
 
     }
 
+    
 
-    if(szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== ''){
-
-        const parent = szembenalloFelek2HTMLelement.parentElement
-
-        const place_of_error = parent.querySelector('.error')
-
-        if(place_of_error !== undefined){
-        place_of_error.innerHTML = "Add meg a másik felet is"
-        }
-        validate = false
-    }
-
-    if(szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === ''){
-
-        const parent = hadero2HTMLelement.parentElement
-
-        const place_of_error = parent.querySelector('.error')
-
-        if(place_of_error !== undefined){
-        place_of_error.innerHTML = "Add meg a másik haderőt is"
-        }
-        validate = false
-    }
 
 
     // Ha minden rendben van, létrehozzuk az új harc adatokat
