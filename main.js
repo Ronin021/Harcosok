@@ -77,6 +77,68 @@ createFejlec()
 const tbody = document.createElement('tbody') // Létrehozunk egy tbody elemet
 table.appendChild(tbody) // Hozzáadjuk a tbody-t a táblázathoz
 
+/**
+ * fields - Az űrlap mezőit leíró objektumok tömbje.
+ * id: Az input azonosítója.
+ * label: A mező címkéje.
+ * type: Az input mező típusa.
+ * errorClass: A hibaüzenet megjelenítéséhez használt osztály.
+ */
+const fields = [
+    { id: "harc_nev", label: "Harc megnevezése", type: "text", errorClass: "error" },
+    { id: "harcolo1", label: "1. Harcoló fél", type: "text", errorClass: "error" },
+    { id: "hadero1", label: "1. Haderő", type: "text", errorClass: "error" },
+    { id: "harcolo2", label: "2. Harcoló fél", type: "text", errorClass: "error" },
+    { id: "hadero2", label: "2. Haderő", type: "text", errorClass: "error" }
+];
+
+/**
+ * createForm - Egy űrlap dinamikus létrehozását végző függvény.
+ * @param {Array} fields - Az űrlap mezőit leíró objektumok tömbje.
+ */
+function createForm(fields) {
+    // Létrehoz egy form elemet és beállítja azonosítóját
+    const formElement = document.createElement('form');
+    formElement.id = 'form';
+    document.body.appendChild(formElement); // Hozzáadja a dokumentum body eleméhez
+    
+    // Végigmegy a fields tömb mezőin és létrehozza a szükséges elemeket
+    for (const field of fields) {
+        // Létrehoz egy div-et a mező tárolására
+        const fieldContainer = document.createElement('div');
+        fieldContainer.classList.add('field'); // Hozzáad egy 'field' osztályt
+        
+        // Létrehoz egy label-t és beállítja a szövegét
+        const fieldLabel = document.createElement('label');
+        fieldLabel.innerText = field.label;
+        fieldContainer.appendChild(fieldLabel); // Hozzáadja a div-hez
+        
+        // Létrehoz egy input mezőt, beállítja a típusát és azonosítóját
+        const inputElement = document.createElement('input');
+        inputElement.type = field.type;
+        inputElement.id = field.id;
+        fieldContainer.appendChild(inputElement); // Hozzáadja a div-hez
+        
+        // Létrehoz egy div-et a hibaüzenet megjelenítéséhez
+        const errorContainer = document.createElement('div');
+        errorContainer.classList = field.errorClass; // Beállítja az osztályát
+        fieldContainer.appendChild(errorContainer); // Hozzáadja a div-hez
+        
+        // Az elkészült mezőt hozzáadja az űrlaphoz
+        formElement.appendChild(fieldContainer);
+    }
+    
+    // Létrehoz egy submit gombot, beállítja a típusát és a szövegét
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.innerText = 'Hozzáadás';
+    formElement.appendChild(submitButton); // Hozzáadja az űrlaphoz
+}
+
+// Meghívja a createForm függvényt a fields tömbbel
+createForm(fields);
+
+
 function Rendertable(array){//itt definiálom a renderTable függvényemet
     for(const currentElement of array){//itt a ciklusunk végigiterál az array tömbünk elemein és a currentElement lesz az aktuális elem
 
@@ -225,40 +287,38 @@ function egyszeruvalid(HTMLElement, errormessage) {
 
 
 
-function osszetettvalidate(szembealloFelek2Field, hadero2Field, errormessage1, errormessage2){
+function osszetettvalidate(szembealloFelek2Field, hadero2Field, errormessage1, errormessage2) {
+    let validate = true;
 
-let validate =true
+    // Ellenőrzés, ha a másik fél mezője üres, de a másik haderő értékkel rendelkezik
+    if (szembealloFelek2Field.value === '' && hadero2Field.value !== '') {
+        const parent = szembealloFelek2Field.parentElement; // parentElement lekérdezése
+        const placeOfError = parent.querySelector('.error'); // Hibaüzenet helyének keresése
 
-  // Ellenőrzés, ha a másik fél mezője üres, de a másik haderő értékkel rendelkezik
-  if (szembenalloFelek2HTMLelement.value === '' && hadero2HTMLelement.value !== '') {
+        if (placeOfError !== undefined) { // Ha van hely a hibaüzenetnek
+            placeOfError.innerHTML = errormessage1; // Hibaüzenet beállítása
+        }
 
-    const parent = szembenalloFelek2HTMLelement.parentElement; // parentElement lekérdezése
-
-    const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
-
-    if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
-        place_of_error.innerHTML = "Add meg a másik felet is"; // Hibaüzenet beállítása
+        validate = false; // Validáció sikertelen
     }
 
-    validate = false; // Validáció sikertelen
-}
+    // Ellenőrzés, ha a másik haderő mezője üres, de a másik fél értékkel rendelkezik
+    if (szembealloFelek2Field.value !== '' && hadero2Field.value === '') {
+        const parent = hadero2Field.parentElement; // parentElement lekérdezése
+        const placeOfError = parent.querySelector('.error'); // Hibaüzenet helyének keresése
 
-// Ellenőrzés, ha a másik fél értékkel rendelkezik, de a másik haderő üres
-if (szembenalloFelek2HTMLelement.value !== '' && hadero2HTMLelement.value === '') {
+        if (placeOfError !== undefined) { // Ha van hely a hibaüzenetnek
+            placeOfError.innerHTML = errormessage2; // Hibaüzenet beállítása
+        }
 
-    const parent = hadero2HTMLelement.parentElement; // parentElement lekérdezése
-
-    const place_of_error = parent.querySelector('.error'); // Hibaüzenet helyének keresése
-
-    if (place_of_error !== undefined) { // Ha van hely a hibaüzenetnek
-        place_of_error.innerHTML = "Add meg a másik haderőt is"; // Hibaüzenet beállítása
+        validate = false; // Validáció sikertelen
     }
 
-    validate = false; // Validáció sikertelen
+    return validate; // Visszaadja az eredményt
 }
 
-return validate
-}
+
+
 
 // A táblázat megjelenítése a csaták tömb alapján
 Rendertable(array);  // Az összes adatot tartalmazó táblázat újrarenderelése
