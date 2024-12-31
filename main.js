@@ -171,5 +171,5 @@ document.getElementById('form').addEventListener('submit', function (e){
 
 
 
-// A táblázat megjelenítése a csaták tömb alapján
+// A táblázat megjelenítése a csaták tömb szerint
 Rendertable(array);  // Az összes adatot tartalmazó táblázat újrarenderelése
